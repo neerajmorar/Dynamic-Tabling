@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Get";
+
+    string num; //to store request
+    var db = Database.Open("StarterSite");
+
+    var query = "SELECT value FROM test WHERE value >= ";
+    var query2 = "SELECT COUNT(value) - 1 as count FROM test WHERE value >= ";
+    var query3 = "SELECT CEILING(((COUNT(value)*1.0)/3)) as count FROM test WHERE value >= ";
+    
+    if(IsPost)
+    { 
+        
+        if(String.IsNullOrWhiteSpace(Request["Number"]) == true)
+        {
+            num = "0"; //default request value
+        }
+        else
+        {
+            //checks if request is integer
+            try
+            {
+                int test = Convert.ToInt32(Request["Number"]);
+            }
+            catch
+            {
+                Response.Redirect("~/Default.cshtml");
+            }
+
+            num = Request["Number"];
+        }
+
+        Page.Title = num; 
+        
+        //select data query
+        query = query + num;
+        //get number of rows - 1 (stops producing more columns than necessary)
+        query2 = query2 + num;
+        //get number of rows needed to be made
+        query3 = query3 + num;
+
+    }
+    else
+    {
+        Response.Redirect("~/Default.cshtml");
+    }
+
+    var dt = db.Query(query);
+    var dt2 = db.Query(query2);
+    var dt3 = db.Query(query3);
+}
+
+<table>
+    @{
+        //row for images
+        int ctrl = 0;
+        int ctrl2 = ctrl;
+        //row for names
+        int ctrl3 = 0;
+        int ctrl4 = ctrl3;
+
+        //creates rows
+        for (int i = 0; i < dt3.ElementAt(0)["count"]; i++)
+        {
+            <tr>
+                @{
+                    //three columns only
+                    //images
+                    for (int k = ctrl2; k < (ctrl + 3); k++)
+                    {
+                        if (k > dt2.ElementAt(0)["count"])
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            <td><img src="~/Images/orderedList@(Convert.ToInt32(dt.ElementAt(k)["value"])).png" /></td>
+                            ctrl2++;
+                        }
+                    }
+                    ctrl = ctrl2;
+                }
+            </tr>
+            <tr>
+                @{
+                    //names
+                    for (int k = ctrl4; k < (ctrl3 + 3); k++)
+                    {
+                        if (k > dt2.ElementAt(0)["count"])
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            <td class="nameColumns">@Convert.ToInt32(dt.ElementAt(k)["value"])</td>
+                            ctrl4++;
+                        }
+                    }
+                    ctrl3 = ctrl4;
+                }
+            </tr>
+        }
+    }
+</table>

@@ -1,0 +1,61 @@
+﻿body
+{
+    margin: 0;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+header
+{
+    background-color: #c0d334;
+    height: 40px;
+    background-image: url(http://www.stanmore.ac.uk/images/colours.png);
+    background-repeat: repeat-y;
+}
+
+#body
+{
+    margin-top: 10px;
+    width: 60%;  
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#body form
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#body table
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nameColumns
+{
+    text-align: center;
+}
+
+footer
+{
+    margin-top: 10px;
+    border-top: 1px solid #bcbcbd;
+    width: 100%;
+}
+
+footer .content-wrapper
+{
+    margin-top: -10px;
+}
+
+footer .content-wrapper .float-left
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
